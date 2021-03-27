@@ -1,4 +1,4 @@
-const TOKEN = require("./token")
+require("dotenv").config()
 const LIST = require("./data/list")
 const ID = require("./data/id")
 
@@ -46,5 +46,4 @@ client.on("message", (message) => {
     client.listenersScript.get("reactmessages").listenMessages(LIST, message)
   }
 })
-
-client.login(TOKEN)
+client.login(process.env.TOKEN)
