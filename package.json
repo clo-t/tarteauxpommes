@@ -4,14 +4,15 @@
   "description": "Bot Discord A v a l a n c h e",
   "main": "bot.js",
   "dependencies": {
-    "discord.js": "^12.5.1"
+    "discord.js": "^12.5.1",
+    "fs": "^0.0.1-security"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
   },
   "scripts": {
     "start": "nodemon bot.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "kill": "killall node"
   },
   "repository": {
     "type": "git",
