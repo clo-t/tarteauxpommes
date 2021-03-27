@@ -1,7 +1,6 @@
 const TOKEN = require("./token")
 const LIST = require("./data/list")
 const ID = require("./data/id")
-const reactionRole = require("./once/ReactionRole")
 
 const Discord = require("discord.js")
 const client = new Discord.Client()
@@ -31,9 +30,9 @@ client.on("ready", () => {
     .get(ID.avalanche)
     .channels.cache.get(ID.roleChannel)
     .messages.fetch(ID.roleMessage)
+  client.listenersScript.get("reactionrole").pronounsRole(ID.roleMessage, client)
+  client.listenersScript.get("reactionrole").sonicRole(client)
 
-  reactionRole.genderRole(ID.roleMessage, client)
-  reactionRole.sonicRole(client)
   console.log("I am ready!")
 })
 
