@@ -12,7 +12,8 @@
     "nodemon": "^2.0.7"
   },
   "scripts": {
-    "start": "nodemon bot.js",
+    "start": "node bot.js",
+    "dev": "nodemon bot.js",
     "kill": "killall node"
   },
   "repository": {
