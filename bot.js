@@ -33,6 +33,7 @@ client.on("ready", () => {
     .messages.fetch(ID.roleMessage)
 
   reactionRole.genderRole(ID.roleMessage, client)
+  reactionRole.sonicRole(client)
   console.log("I am ready!")
 })
 
