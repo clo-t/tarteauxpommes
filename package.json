@@ -12,6 +12,7 @@
     "nodemon": "^2.0.7"
   },
   "scripts": {
+    "start": "",
     "postdeploy": "node bot.js",
     "dev": "nodemon bot.js",
     "kill": "killall node"
