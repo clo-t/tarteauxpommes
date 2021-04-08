@@ -1,17 +1,23 @@
 module.exports = {
   name: "reactionrole",
   description: "Sets up a reaction role message!",
-  async pronounsRole(roleMessageId, client) {
+  async pronounsRole(roleMessageId, role, client) {
     client.on("messageReactionAdd", async (reaction, user) => {
       let message = reaction.message,
         emoji = reaction.emoji
       if (message.id !== roleMessageId) return
 
-      console.log("add")
+      console.log("add -> ", emoji.name)
 
       switch (emoji.name) {
-        case "ccomplik":
-          await message.guild.members.cache.get(user.id).roles.add("825323709773774899")
+        case "🧜‍♀️":
+          await message.guild.members.cache.get(user.id).roles.add(role.elle)
+          break
+        case "🧜‍♂️":
+          await message.guild.members.cache.get(user.id).roles.add(role.il)
+          break
+        case "🧜":
+          await message.guild.members.cache.get(user.id).roles.add(role.iel)
           break
 
         default:
@@ -27,9 +33,17 @@ module.exports = {
       console.log("remove")
 
       switch (emoji.name) {
-        case "ccomplik":
+        case "🧜‍♀️":
           console.log(message.guild.members.cache)
-          await message.guild.members.cache.get(user.id).roles.remove("825323709773774899")
+          await message.guild.members.cache.get(user.id).roles.remove(role.elle)
+          break
+        case "🧜‍♂️":
+          console.log(message.guild.members.cache)
+          await message.guild.members.cache.get(user.id).roles.remove(role.il)
+          break
+        case "🧜":
+          console.log(message.guild.members.cache)
+          await message.guild.members.cache.get(user.id).roles.remove(role.iel)
           break
 
         default:
