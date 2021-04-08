@@ -47,7 +47,7 @@ client.on("ready", () => {
   console.log("I am ready!")
 })
 
-client.on("message", (message) => {
+client.on("message", (message, user) => {
   // console.log(message)
   if (message.author.bot) return
   if (message.content.startsWith(prefix)) {
