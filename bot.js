@@ -37,12 +37,14 @@ for (const file of listenersFiles) {
 }
 
 client.on("ready", () => {
-  client.guilds.cache
-    .get(ID.avalanche)
-    .channels.cache.get(ID.roleChannel)
-    .messages.fetch(ID.roleMessage)
-  client.listenersScript.get("reactionrole").pronounsRole(ID.roleMessage, ID.role, client)
-  client.listenersScript.get("reactionrole").sonicRole(client)
+  if (process.env.DEV !== "TRUE") {
+    client.guilds.cache
+      .get(ID.avalanche)
+      .channels.cache.get(ID.roleChannel)
+      .messages.fetch(ID.roleMessage)
+    client.listenersScript.get("reactionrole").pronounsRole(ID.roleMessage, ID.role, client)
+    client.listenersScript.get("reactionrole").sonicRole(client)
+  }
 
   console.log("I am ready!")
 })
@@ -51,15 +53,15 @@ client.on("message", (message, user) => {
   // console.log(message)
   if (message.author.bot) return
   if (message.content.startsWith(prefix)) {
-    let args = message.content.split("&")
-    args = args[1].trim()
-    if (client.commands.get(args) !== undefined) {
-      client.commands.get(args).execute(client, message)
+    const args = message.content.slice(prefix.length).trim().split(/ +/)
+    const command = args.shift().toLowerCase()
+    if (client.commands.get(command) !== undefined) {
+      client.commands.get(command).execute(client, message, args)
     } else {
       message.channel.send("la commande n'existe pas :(((((")
     }
   } else {
-    console.log(message.content)
+    //console.log(message.content)
     client.listenersScript.get("reactmessages").listenMessages(client.data.get("list"), message)
   }
 })
