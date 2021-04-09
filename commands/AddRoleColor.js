@@ -44,6 +44,7 @@ module.exports = {
           data: {
             name: `color ${args[0]}`,
             color: args[0],
+            mentionable: false,
           },
         })
         .then((role) => {
