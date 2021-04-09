@@ -27,6 +27,7 @@ module.exports = {
     for (const role of guildRoles) {
       // check if role existing
       if (`color ${args[0]}` === role.name) {
+        //message.channel.send(`role exist -> ${role.name} :  ${role.id}`)
         isRoleExist = true
         existingRoleID = role.id
       }
@@ -48,21 +49,42 @@ module.exports = {
           },
         })
         .then((role) => {
-          message.guild.members.cache.get(message.author.id).roles.add(role.id)
+          message.guild.members.cache
+            .get(message.author.id)
+            .roles.add(role.id)
+            .then(() => deleteRole(message))
         })
         .catch(console.error)
     } else {
-      message.guild.members.cache.get(message.author.id).roles.add(existingRoleID)
-    }
-
-    for (const role of guildRoles) {
-      // check if other color are assigned
-      if (role.name.startsWith("color ")) {
-        let members = message.guild.roles.cache.get(role.id).members.map((m) => m.user.id)
-        if (members.length === 0) {
-          message.guild.roles.cache.get(role.id).delete()
-        }
-      }
+      console.log("role exist")
+      message.guild.members.cache
+        .get(message.author.id)
+        .roles.add(existingRoleID)
+        .then(() => deleteRole(message))
     }
   },
+}
+
+function deleteRole(message) {
+  // message.guild.roles
+  //   .fetch()
+  //   .then((roles) => {
+  //     console.log(`There are ${roles.cache.size} roles.`)
+  //     let guildRoles = roles.cache.map((r) => ({
+  //       id: r.id,
+  //       name: r.name,
+  //     }))
+  //     for (const role of guildRoles) {
+  //       // check if other color are assigned
+  //       if (role.name.startsWith("color ")) {
+  //         console.log(role.name)
+  //         let members = message.guild.roles.cache.get(role.id).members.map((m) => m.user.id)
+  //         console.log(members)
+  //         if (members.length === 0) {
+  //           message.guild.roles.cache.get(role.id).delete()
+  //         }
+  //       }
+  //     }
+  //   })
+  //   .catch(console.error)
 }
