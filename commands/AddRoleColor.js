@@ -20,11 +20,24 @@ module.exports = {
       id: r.id,
       name: r.name,
     }))
+    //let guild = message.guild.members.fetch().then(console.log)
 
     let isRoleExist = false
     let existingRoleID = ""
 
     for (const role of guildRoles) {
+      // check if other color are assigned
+      if (role.name.startsWith("color ") && `color ${args[0]}` !== role.name) {
+        let members = message.guild.roles.cache.get(role.id).members.map((m) => m.user.tag)
+        console.log(
+          role.name,
+          " -> ",
+          message.guild.roles.cache.get(role.id).members.map((m) => m.user.tag)
+        )
+        if (members.length === 0) {
+          message.guild.roles.cache.get(role.id).delete()
+        }
+      }
       // check if role existing
       if (`color ${args[0]}` === role.name) {
         //message.channel.send(`role exist -> ${role.name} :  ${role.id}`)
@@ -49,42 +62,12 @@ module.exports = {
           },
         })
         .then((role) => {
-          message.guild.members.cache
-            .get(message.author.id)
-            .roles.add(role.id)
-            .then(() => deleteRole(message))
+          message.guild.members.cache.get(message.author.id).roles.add(role.id)
         })
         .catch(console.error)
     } else {
       console.log("role exist")
-      message.guild.members.cache
-        .get(message.author.id)
-        .roles.add(existingRoleID)
-        .then(() => deleteRole(message))
+      message.guild.members.cache.get(message.author.id).roles.add(existingRoleID)
     }
   },
-}
-
-function deleteRole(message) {
-  // message.guild.roles
-  //   .fetch()
-  //   .then((roles) => {
-  //     console.log(`There are ${roles.cache.size} roles.`)
-  //     let guildRoles = roles.cache.map((r) => ({
-  //       id: r.id,
-  //       name: r.name,
-  //     }))
-  //     for (const role of guildRoles) {
-  //       // check if other color are assigned
-  //       if (role.name.startsWith("color ")) {
-  //         console.log(role.name)
-  //         let members = message.guild.roles.cache.get(role.id).members.map((m) => m.user.id)
-  //         console.log(members)
-  //         if (members.length === 0) {
-  //           message.guild.roles.cache.get(role.id).delete()
-  //         }
-  //       }
-  //     }
-  //   })
-  //   .catch(console.error)
 }

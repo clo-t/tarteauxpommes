@@ -42,6 +42,8 @@ client.on("ready", () => {
       .get(ID.avalanche)
       .channels.cache.get(ID.roleChannel)
       .messages.fetch(ID.roleMessage)
+
+    client.guilds.cache.get(ID.avalanche).members.fetch()
     client.listenersScript.get("reactionrole").pronounsRole(ID.roleMessage, ID.role, client)
     client.listenersScript.get("reactionrole").sonicRole(client)
   }
