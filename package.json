@@ -4,9 +4,13 @@
   "description": "Bot Discord A v a l a n c h e",
   "main": "bot.js",
   "dependencies": {
+    "@discordjs/opus": "^0.5.3",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
-    "fs": "^0.0.1-security"
+    "ffmpeg-static": "^4.4.0",
+    "fs": "^0.0.1-security",
+    "yt-search": "^2.10.2",
+    "ytdl-core": "^4.9.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
