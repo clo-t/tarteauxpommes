@@ -12,12 +12,20 @@ client.data = new Discord.Collection()
 
 const commandFiles = fs.readdirSync("./commands/").filter((file) => file.endsWith(".js"))
 const listenersFiles = fs.readdirSync("./listeners/").filter((file) => file.endsWith(".js"))
+const dataFiles = fs.readdirSync("./data/").filter((file) => file.endsWith(".json"))
+
 for (const file of commandFiles) {
   const command = require(`./commands/${file}`)
 
   client.commands.set(command.name, command)
 }
-const dataFiles = fs.readdirSync("./data/").filter((file) => file.endsWith(".json"))
+
+for (const file of listenersFiles) {
+  const listener = require(`./listeners/${file}`)
+
+  client.listenersScript.set(listener.name, listener)
+}
+
 for (const file of dataFiles) {
   fs.readFile(`./data/${file}`, "utf8", (err, data) => {
     if (err) {
@@ -30,11 +38,6 @@ for (const file of dataFiles) {
   })
 }
 
-for (const file of listenersFiles) {
-  const listener = require(`./listeners/${file}`)
-
-  client.listenersScript.set(listener.name, listener)
-}
 
 client.on("ready", () => {
   if (process.env.DEV !== "TRUE") {
@@ -52,19 +55,23 @@ client.on("ready", () => {
 })
 
 client.on("message", (message, user) => {
-  // console.log(message)
   if (message.author.bot) return
   if (message.content.startsWith(prefix)) {
     const args = message.content.slice(prefix.length).trim().split(/ +/)
-    const command = args.shift().toLowerCase()
-    if (client.commands.get(command) !== undefined) {
-      client.commands.get(command).execute(client, message, args)
+    const cmd = args.shift().toLowerCase()
+
+    const command = client.commands.get(cmd) || client.commands.find(a=> a.aliases && a.aliases.includes(cmd));
+
+    if (command) {
+      command.execute(client, message, cmd, args)
     } else {
       message.channel.send("la commande n'existe pas :(((((")
     }
   } else {
-    //console.log(message.content)
     client.listenersScript.get("reactmessages").listenMessages(client.data.get("list"), message)
   }
 })
+
+
+// always keep at the last line
 client.login(process.env.TOKEN)

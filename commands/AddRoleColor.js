@@ -1,7 +1,7 @@
 module.exports = {
   name: "color",
   description: "s'attribuer une couleur",
-  async execute(client, message, args) {
+  async execute(client, message, cmd, args) {
     //@TODO : remove unused roles in real time
     let reHex = new RegExp(/^#[0-9A-F]{6}$/, "i")
     if (!reHex.test(args[0]) && args[0] !== "remove") {
